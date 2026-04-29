@@ -20,6 +20,20 @@ Compatibility should account for a range of device models and versions of phones
 It should be able to run on our devices anywhere in the world, whether that be in a house/building, or out in a park.
 App may require a database for storage when the user creates an account, last known location. etc. It will depend on cloud-based backend infrastructure to manage user authentication, profile data, tags, and temp chat sessions. It should also rely on device hardware including GPS/location services, push notification systems, and basic sensors to determine proximity and activity status.
 
+Network & Connectivity
+Core features — including location-based matching, proximity detection, and real-time messaging require an active internet connection. The app should degrade gracefully under poor connectivity: for example, displaying a cached "Last Active" timestamp rather than erroring out when live data is unavailable. Location updates and match refreshes will be triggered periodically or on significant location change events to balance responsiveness with battery usage.
+
+Backend & Cloud Infrastructure
+Friendli depends on a cloud-hosted backend to handle all server-side logic and storage. This includes:
+
+User accounts and profiles (persistent storage)
+Interest tags and matching logic (query-based filtering by proximity + shared interests)
+Last-known location and "Last Active" timestamps (updated periodically, not continuously tracked)
+Transitory group chat sessions (ephemeral; automatically purged when users leave the radius)
+Blackout zone coordinates (stored per user, never shared with other users or used in matching while active)
+
+All communication between the app and backend must occur over encrypted channels (HTTPS/TLS). Location data should be stored minimally — only the most recent known position is retained, with no location history logged.
+
 # Functional Requirements
 
 **Core Components**
